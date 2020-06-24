@@ -12,7 +12,7 @@ For structures and enum names you should write them all in capital characters an
 
 ### Clang Format
 
-We use [this ](https://github.com/SinaKarvandi/HyperDbg/blob/master/hyperdbg/hprdbghv/.clang-format)clang format for writing codes in our C driver.
+We use [this ](https://github.com/HyperDbg/HyperDbg/blob/master/hyperdbg/hprdbghv/.clang-format)clang format for writing codes in our C driver.
 
 Please make sure to format the code using clang format's visual studio extension or clang command-line tools.
 
@@ -32,4 +32,10 @@ Please put the comment in this style.
 ### Global Variables
 
 All global variables should start with `g_` for example `g_GuestState`.
+
+### File Names
+
+For drivers, file names start with a capital case character.
+
+For user-mode codes, file names start with lower case characters. 
 

@@ -1,6 +1,6 @@
 # Table of contents
 
-* [HyperDbg Debugger](README.md)
+* [HyperDbg](README.md)
 
 ## Getting Started
 
@@ -8,6 +8,7 @@
 * [Attach to HyperDbg](getting-started/attach-to-hyperdbg/README.md)
   * [Attach to remote machine](getting-started/attach-to-hyperdbg/attach-to-remote-machine.md)
   * [Attach to local machine](getting-started/attach-to-hyperdbg/attach-to-local-machine.md)
+* [Quick Start](getting-started/quick-start.md)
 
 ## Using HyperDbg
 
@@ -15,16 +16,6 @@
   * [How to create a condition?](using-hyperdbg/prerequisites/how-to-create-a-condition.md)
   * [How to create an action?](using-hyperdbg/prerequisites/how-to-create-an-action.md)
 * [Examples](using-hyperdbg/examples.md)
-* [Features](using-hyperdbg/features/README.md)
-  * [Hidden Hooks](using-hyperdbg/features/hidden-hooks/README.md)
-    * [Execution Hook](using-hyperdbg/features/hidden-hooks/execution-hook.md)
-    * [R/W Hook](using-hyperdbg/features/hidden-hooks/r-w-hook.md)
-  * [Syscall Hook](using-hyperdbg/features/syscall-hook.md)
-
-## Tips & Tricks
-
-* [Considerations](tips-and-tricks/considerations/README.md)
-  * [The "unsafe" behavior](tips-and-tricks/considerations/the-unsafe-behavior.md)
 
 ## Commands
 
@@ -47,9 +38,28 @@
   * [!pte \(display page-level address and entries\)](commands/extension-commands/pte.md)
   * [!db, !dc, !dd, !dq \(read physical memory\)](commands/extension-commands/d.md)
   * [!u \(disassemble physical address\)](commands/extension-commands/u.md)
-  * [!hiddenhook \(hidden hook with EPT\)](commands/extension-commands/hiddenhook.md)
+  * [!epthook \(hidden hook with EPT - stealth breakpoints\)](commands/extension-commands/epthook.md)
+  * [!epthook2 \(hidden hook with EPT - detours\)](commands/extension-commands/epthook2.md)
   * [!monitor \(monitor read/write to a page\)](commands/extension-commands/monitor.md)
-  * [!syscallhook \(hook system-calls\)](commands/extension-commands/syscallhook.md)
+  * [!syscall \(hook system-calls\)](commands/extension-commands/syscall.md)
+  * [!sysret \(hook SYSRET instruction execution\)](commands/extension-commands/sysret.md)
+  * [!cpuid \(hook CPUID instruction execution\)](commands/extension-commands/cpuid.md)
+  * [!msrread \(hook RDMSR instruction execution\)](commands/extension-commands/msrread.md)
+  * [!msrwrite \(hook WRMSR instruction execution\)](commands/extension-commands/msrwrite.md)
+  * [!tsc \(hook RDTSC/RDTSCP instruction execution\)](commands/extension-commands/tsc.md)
+  * [!pmc \(hook RDPMC instruction execution\)](commands/extension-commands/pmc.md)
+  * [!exception \(hook first 32 entries of IDT\)](commands/extension-commands/exception.md)
+  * [!interrupt \(hook external device interrupts\)](commands/extension-commands/interrupt.md)
+  * [!dr \(hook access to debug registers\)](commands/extension-commands/dr.md)
+  * [!ioin \(hook IN instruction execution\)](commands/extension-commands/ioin.md)
+  * [!ioout \(hook OUT instruction execution\)](commands/extension-commands/ioout.md)
+
+## Tips & Tricks
+
+* [Considerations](tips-and-tricks/considerations/README.md)
+  * [Basic Concepts in Intel VT-x](tips-and-tricks/considerations/basic-concepts-in-intel-vt-x.md)
+  * [Vmx root-mode vs Vmx non-root mode](tips-and-tricks/considerations/vmx-root-mode-vs-vmx-non-root-mode.md)
+  * [The "unsafe" behavior](tips-and-tricks/considerations/the-unsafe-behavior.md)
 
 ## Style Guide
 
@@ -58,19 +68,22 @@
 * [Doxygen Style](style-guide/doxygen-style.md)
 * [Logo & Artworks](style-guide/logo.md)
 
-## How does it work?
+## Design
 
-* [Features Design](how-does-it-work/features-design.md)
-* [Debugger Internals](how-does-it-work/debugger-internals/README.md)
-  * [Events](how-does-it-work/debugger-internals/events.md)
-  * [Conditions](how-does-it-work/debugger-internals/conditions.md)
-  * [Actions](how-does-it-work/debugger-internals/actions.md)
+* [Features](design/features/README.md)
+  * [Design of !epthook2](design/features/design-of-epthook2.md)
+  * [Design of !monitor](design/features/design-of-monitor.md)
+* [Debugger Internals](design/debugger-internals/README.md)
+  * [Events](design/debugger-internals/events.md)
+  * [Conditions](design/debugger-internals/conditions.md)
+  * [Actions](design/debugger-internals/actions.md)
+  * [IOCTL Requests for Events](design/debugger-internals/ioctl-requests-for-events.md)
 
 ## Links
 
 * [Twitter](https://twitter.com/HyperDbg)
-* [Releases](https://github.com/SinaKarvandi/HyperDbg/releases)
-* [Doxygen](https://doxygen.hyperdbg.com/doxygen)
+* [Releases](https://github.com/HyperDbg/HyperDbg/releases)
+* [Doxygen](https://doxygen.hyperdbg.com/)
 * [Contribution](https://github.com/HyperDbg/HyperDbg/blob/master/CONTRIBUTING.md)
 * [Blog](https://rayanfam.com/)
 
