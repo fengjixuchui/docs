@@ -48,6 +48,7 @@
   * [!msrwrite \(hook WRMSR instruction execution\)](commands/extension-commands/msrwrite.md)
   * [!tsc \(hook RDTSC/RDTSCP instruction execution\)](commands/extension-commands/tsc.md)
   * [!pmc \(hook RDPMC instruction execution\)](commands/extension-commands/pmc.md)
+  * [!vmcall \(hook hypercalls\)](commands/extension-commands/vmcall.md)
   * [!exception \(hook first 32 entries of IDT\)](commands/extension-commands/exception.md)
   * [!interrupt \(hook external device interrupts\)](commands/extension-commands/interrupt.md)
   * [!dr \(hook access to debug registers\)](commands/extension-commands/dr.md)
@@ -60,6 +61,11 @@
   * [Basic Concepts in Intel VT-x](tips-and-tricks/considerations/basic-concepts-in-intel-vt-x.md)
   * [Vmx root-mode vs Vmx non-root mode](tips-and-tricks/considerations/vmx-root-mode-vs-vmx-non-root-mode.md)
   * [The "unsafe" behavior](tips-and-tricks/considerations/the-unsafe-behavior.md)
+* [Nested-Virtualization Environments](tips-and-tricks/nested-virtualization-environments/README.md)
+  * [Run HyperDbg on VMware](tips-and-tricks/nested-virtualization-environments/run-hyperdbg-on-vmware.md)
+  * [Run HyperDbg on Hyper-V](tips-and-tricks/nested-virtualization-environments/run-hyperdbg-on-hyper-v.md)
+  * [Supporting VMware/Hyper-V](tips-and-tricks/nested-virtualization-environments/supporting-vmware-hyper-v.md)
+  * [VMware backdoor I/O ports](tips-and-tricks/nested-virtualization-environments/vmware-backdoor-io-ports.md)
 
 ## Style Guide
 
@@ -79,6 +85,7 @@
   * [Actions](design/debugger-internals/actions.md)
   * [IOCTL Requests for Events](design/debugger-internals/ioctl-requests-for-events.md)
   * [VMX Root-mode Compatible Message Tracing](design/debugger-internals/vmx-root-mode-compatible-message-tracing.md)
+  * [Control over NMIs](design/debugger-internals/control-over-nmis.md)
 
 ## Links
 
