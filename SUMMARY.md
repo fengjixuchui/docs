@@ -33,6 +33,7 @@
   * [.connect \(connect to a session\)](commands/meta-commands/.connect.md)
   * [.disconnect \(disconnect from a session\)](commands/meta-commands/.disconnect.md)
   * [.formats \(show number formats\)](commands/meta-commands/.formats.md)
+  * [.script \(run batch script of HyperDbg commands\)](commands/meta-commands/.script.md)
   * [.cls \(clear the screen\)](commands/meta-commands/.cls.md)
 * [Extension Commands](commands/extension-commands/README.md)
   * [!pte \(display page-level address and entries\)](commands/extension-commands/pte.md)
@@ -54,6 +55,8 @@
   * [!dr \(hook access to debug registers\)](commands/extension-commands/dr.md)
   * [!ioin \(hook IN instruction execution\)](commands/extension-commands/ioin.md)
   * [!ioout \(hook OUT instruction execution\)](commands/extension-commands/ioout.md)
+  * [!hide \(enable transparent-mode\)](commands/extension-commands/hide.md)
+  * [!unhide \(disable transparent-mode\)](commands/extension-commands/unhide.md)
 
 ## Tips & Tricks
 
@@ -77,6 +80,7 @@
 ## Design
 
 * [Features](design/features/README.md)
+  * [Design of !epthook](design/features/design-of-epthook.md)
   * [Design of !epthook2](design/features/design-of-epthook2.md)
   * [Design of !monitor](design/features/design-of-monitor.md)
 * [Debugger Internals](design/debugger-internals/README.md)
