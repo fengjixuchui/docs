@@ -98,6 +98,7 @@
   * [Supporting VMware/Hyper-V](tips-and-tricks/nested-virtualization-environments/supporting-vmware-hyper-v.md)
   * [VMware backdoor I/O ports](tips-and-tricks/nested-virtualization-environments/vmware-backdoor-io-ports.md)
 * [Misc](tips-and-tricks/misc/README.md)
+  * [Message Overflow](tips-and-tricks/misc/message-overflow.md)
   * [Customize Build](tips-and-tricks/misc/customize-build.md)
 
 ## Style Guide
@@ -124,7 +125,9 @@
   * [Actions](design/debugger-internals/actions.md)
   * [IOCTL Requests for Events](design/debugger-internals/ioctl-requests-for-events.md)
 * [Script Engine](design/script-engine/README.md)
-  * [Log the State's LL1 Grammer](design/script-engine/log-the-states-ll1-grammer.md)
+  * [Assumptions & Evaluations](design/script-engine/assumptions-and-evaluations.md)
+  * [Examples](design/script-engine/examples.md)
+  * [LL1 Grammar](design/script-engine/log-the-states-ll1-grammer.md)
 
 ## Links
 

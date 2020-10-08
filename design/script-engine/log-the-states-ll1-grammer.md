@@ -1,107 +1,134 @@
-# Log the State's LL1 Grammer
+---
+description: LL1 Grammar of Log the State
+---
+
+# LL1 Grammar
+
+Currently, HyperDbg operates based on the following grammar.
 
 ### LL1 Grammar
 
 ```text
-S -> C;S’
-S’ -> C;S’ 
-S’ -> λ
-C -> name = E0;
+S -> C ; S'
+S' -> C ; S'
+S' ->  '\n'
+S' ->  '\r\n'
+C -> id = E0 ;
 
-E0 -> E1 E0’
-E0’ -> | E1 E0’
-E0’ -> λ
+E0 -> E1 E0'
+E0' -> | E1 E0'
+E0' -> eps
 
-E1 ->  E2 E1’
-E1’ -> ^ E2 E1’ 
-E1’ -> λ 
+E1 -> E2 E1'
+E1' -> ^ E2 E1' 
+E1' -> eps
 
-E2 ->  E3 E2’
-E2’ -> & E3 E2’ 
-E2’ -> λ 
+E2 -> E3 E2'
+E2' -> & E3 E2' 
+E2' -> eps  
 
-E3 -> E4 E3’
-E3’ -> >> E4 E3’
-E3’ -> λ
+E3 -> E4 E3'
+E3' -> >> E4 E3'
+E3' -> eps
 
-E4 -> E5 E4’
-E4’ -> << E5 E4’ 
-E4’ -> λ
+E4 -> E5 E4'
+E4' -> << E5 E4' 
+E4' -> eps
 
-E5 -> E6 E5’
-E5’ -> + E6 E5’
-E5’ -> λ
+E5 -> E6 E5'
+E5' -> + E6 E5'
+E5' -> eps
 
-E6 -> E7 E6’
-E6’ -> - E7 E6’ 
-E6’ -> λ
+E6 -> E7 E6'
+E6' -> - E7 E6' 
+E6' -> eps
 
-E7 -> E8 E7’
-E7’ -> * E8 E7’ 
-E7’ -> λ
+E7 -> E8 E7'
+E7' -> * E8 E7' 
+E7' -> eps
 
-E8 -> E9 E8’
-E8’ -> / E9 E8’
-E8’ -> λ
+E8 -> E9 E8'
+E8' -> / E9 E8'
+E8' -> eps 
 
-E9 -> poi(Expr) 
-E9 -> db(Expr) 
-E9 -> dd(Expr) 
-E9 -> dw(Expr) 
-E9 -> dq(Expr) 
-E9 -> str(Expr) 
-E9 -> wstr(Expr) 
-E9 -> sizeof(Expr) 
-E9 -> not(Expr) 
-E9 -> neg(Expr) 
+E9 -> poi ( E0 ) 
+E9 -> db ( E0 ) 
+E9 -> dd ( E0 ) 
+E9 -> dw ( E0 ) 
+E9 -> dq ( E0 ) 
+E9 -> str ( E0 ) 
+E9 -> wstr ( E0 ) 
+E9 -> sizeof ( E0 ) 
+E9 -> not ( E0 ) 
+E9 -> neg ( E0 ) 
 
-E9 -> @reg 
-E9 -> num  
-E9 -> func 
-E9 -> $meta
+E9 ->  @reg 
+E9 ->  num  
+E9 ->  func 
+E9 ->  $pseudo-reg
 ```
 
-### Examples
+### The Standard representation of LL1 Grammar
 
 ```text
-test=str(@rcx)
-test=dq(@rcx)
-test=$proc+@rdx
-test=poi(@rax+a0)
-test1=wstr(poi($proc+10));test2=str(poi($proc+10));
-test=dw(NtCreateFile+10)
-test=dw(NtCreateFile+@rcx+($proc|3+poi(poi(@rax))))
+S:C ; S'
+S':C ; S'
+S': '\n'
+S': '\r\n'
+C:id = E0 ;
+
+E0:E1 E0'
+E0':| E1 @OR E0'
+E0':eps
+
+E1:E2 E1'
+E1':^ E2 @XOR E1' 
+E1':eps
+
+E2:E3 E2'
+E2':& E3 @AND E2' 
+E2':eps  
+
+E3:E4 E3'
+E3':>> E4 @ASR E3'
+E3':eps
+
+E4:E5 E4'
+E4':<< E5 @ASL E4' 
+E4':eps
+
+E5:E6 E5'
+E5':+ E6 @ADD E5'
+E5':eps
+
+E6:E7 E6'
+E6':- E7 @SUB E6' 
+E6':eps
+
+E7:E8 E7'
+E7':* E8 @MUL E7' 
+E7':eps
+
+E8:E9 E8'
+E8':/ E9 @DIV E8'
+E8':eps 
+
+E9:poi ( E0 @POI ) 
+E9:db ( E0 @DB ) 
+E9:dd ( E0 @DD ) 
+E9:dw ( E0 @DW ) 
+E9:dq ( E0 @DQ ) 
+E9:str ( E0 @STR ) 
+E9:wstr ( E0 @WSTR ) 
+E9:sizeof ( E0 @SIZEOF ) 
+E9:not ( E0 @NOT ) 
+E9:neg ( E0 @NEGs ) 
+
+E9:@PUSH @reg 
+E9:@PUSH num  
+E9:@PUSH func 
+E9:@PUSH $pseudo-reg
 ```
 
-### Description
 
-`test=str(@rcx)`
-
-One field, called '**test**', which will be read as an ASCII string pointed by **rcx** register.
-
-`test=dq(@rcx)`
-
-One field, called '**test**', which will be read as an 8-byte hex pointed by **rcx** register.
-
-`test=$proc+@rdx`
-
-One field, called '**test**', which is equivalent to **$proc** \(current `_EPROCESS`\) added to the **rdx** register.
-
-`test=poi(@rax+a0)` 
-
-One field, called '**test**', which first, **rax** register is added with **0xa0** constant then a dereference occurs and the target is shown as a QWORD hex.
-
-`test1=wstr(poi($proc+10));test2=str(poi($proc+10));`
-
-Three fields, first '**test1**' which is **$proc** \(current `_EPROCESS`\) added with **0x10** then a dereference occurs and the target pointer in the dereferenced location is shown as a wide-char string.
-
-Second, '**test2**' which is **$proc** \(current `_EPROCESS`\) added with **0x10** then a dereference occurs and the target pointer in the dereferenced location is shown as an ASCII string.
-
-`test=dw(NtCreateFile+10)`
-
-One field, called '**test**', **NtCreateFile** location is added with **0x10** then a DWORD value from the target address \(**NtCreateFile+10**\) is shown.
-
-{% hint style="success" %}
-By default, **HyperDbg** interprets the numbers as **hex** \(base **16**\), if you want to specify other forms of a number you should use MASM prefixes. In all MASM expressions, numeric values are interpreted as numbers in the current radix \(16, 10, or 8\). You can override the default radix by specifying the **0x** prefix \(**hexadecimal**\), the **0n** prefix \(**decimal**\), the **0t** prefix \(**octal**\), or the **0y** prefix \(**binary**\).
-{% endhint %}
 
