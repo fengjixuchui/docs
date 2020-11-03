@@ -12,6 +12,10 @@ The evaluation engine is open-source and it is available at the [evaluation](htt
 
 **HyperDbg** uses a MASM-like \(Windbg\) syntax to evaluate script expressions.
 
+{% hint style="success" %}
+**HyperDbg** script engine is case-insensitive.
+{% endhint %}
+
 ### Keywords
 
 The following keywords are valid in **Script Engine**.
@@ -63,6 +67,18 @@ Here are the currently supported pseudo-registers supported by the script engine
 ### Number Prefixes
 
 By default, **HyperDbg** interprets the numbers as hex \(base 16\), if you want to specify other forms of a number you should use MASM prefixes. In all MASM expressions, numeric values are interpreted as numbers in the current radix \(16, 10, or 8\). You can override the default radix by specifying the 0x prefix \(hexadecimal\), the 0n prefix \(decimal\), the 0t prefix \(octal\), or the 0y prefix \(binary\).
+
+### Functions
+
+The following functions are supported in **Script Engine**.
+
+| Function | Description |
+| :--- | :--- |
+| **Print** | Print the result of an expression. [Read more... ](https://docs.hyperdbg.com/commands/scripting-language/functions/print) |
+| **Json** | Print the result as a JSON string. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/json) |
+| **Break** | Halt the system and give control to the debugger. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/break) |
+| **EnableEvent** | Enable an event. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/enableevent) |
+| **DisableEvent** | Disable an event. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/disableevent) |
 
 
 
