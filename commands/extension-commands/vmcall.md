@@ -66,7 +66,19 @@ Imagine we want to break on all **VMCALL** executions of a process id **0x490** 
 
 ### Script
 
-Not Completed Yet!
+Using the following command you can use HyperDbg's Script Engine. You should replace the string between braces \(`HyperDbg Script Here`\) with your script. You can find script examples [here](https://docs.hyperdbg.com/commands/scripting-language/examples). 
+
+```
+!vmcall script { HyperDbg Script Here }
+```
+
+**Script \(From File\)**
+
+If you saved your script into a file then you can add `file:` instead of a script and append the file path to it. For example, the following examples show how you can run a script from `file:c:\users\sina\desktop\script.txt`. 
+
+```
+!vmcall script {file:c:\users\sina\desktop\script.txt}
+```
 
 ### Custom Code
 
@@ -81,7 +93,7 @@ Your custom code will be executed in vmx-root mode. Take a look at [this topic](
 Monitoring process id **0x490** for **VMCALL** instruction execution ****and run 3 nops whenever the event is triggered. Take a look at [Run Custom Code](https://docs.hyperdbg.com/using-hyperdbg/prerequisites/how-to-create-an-action#run-custom-codes), for more information.
 
 ```c
-!pmc pid 490 code {90 90 90}
+!vmcall pid 490 code {90 90 90}
 ```
 
 #### Run Custom Code \(Conditional\)
@@ -89,7 +101,7 @@ Monitoring process id **0x490** for **VMCALL** instruction execution ****and run
 Monitoring process id **0x490** for **VMCALL** instruction execution and run 3 nops whenever the event condition is triggered and run 3 nops whenever the event is triggered. Take a look at [Run Custom Code](https://docs.hyperdbg.com/using-hyperdbg/prerequisites/how-to-create-an-action#run-custom-codes) and [how to create a condition](https://docs.hyperdbg.com/using-hyperdbg/prerequisites/how-to-create-a-condition), for more information.
 
 ```c
-!pmc pid 490 code {90 90 90} condition {90 90 90}
+!vmcall pid 490 code {90 90 90} condition {90 90 90}
 ```
 
 {% hint style="success" %}
