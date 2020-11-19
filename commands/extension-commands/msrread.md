@@ -10,7 +10,7 @@ description: Description of '!msrread' command in HyperDbg.
 
 ### Syntax
 
-> !msrread \[msr \(hex value\)\] \[pid \(hex value\)\] \[core \(hex value\)\] \[event options\]
+> !msrread \[msr \(hex value\)\] \[pid \(hex value\)\] \[core \(hex value\)\] \[imm \(yes\|no\)\] \[event options\]
 
 ### Description
 
@@ -33,6 +33,10 @@ When you enable this event, only your specific MSR will be hooked, so this comma
 **\[core \(hex value\)\]**
 
           Optional value to trigger the event in just a specific core. Add `core xx` to your command thus command will be executed if core id is equal to `xx`. If you don't specify this option then by default you receive events on all cores.
+
+**\[imm \(yes\|no\)\]**
+
+          Optional value in which `yes` means the results \(printed texts in scripts\) should be delivered immediately to the debugger. `no` means that the results can be accumulated and to be delivered as a couple of messages when the buffer is full; thus, it's substantially faster but it's not real-time. By default, this value is set to  `yes`.
 
 **\[event options\]**
 
@@ -76,6 +80,12 @@ Using the following command you can use HyperDbg's Script Engine. You should rep
 !msrread 0xc0000082 script { HyperDbg Script Here }
 ```
 
+The above command when messages don't need to be delivered immediately.
+
+```
+!msrread 0xc0000082 script { HyperDbg Script Here } imm no
+```
+
 **Script \(From File\)**
 
 If you saved your script into a file then you can add `file:` instead of a script and append the file path to it. For example, the following examples show how you can run a script from `file:c:\users\sina\desktop\script.txt`. 
@@ -83,6 +93,10 @@ If you saved your script into a file then you can add `file:` instead of a scrip
 ```
 !msrread 0xc0000082 script {file:c:\users\sina\desktop\script.txt}
 ```
+
+{% hint style="success" %}
+You can use [**event forwarding**](https://docs.hyperdbg.com/tips-and-tricks/misc/event-forwarding) if you want to forward the event monitoring results from this event and other events to an external source e.g. **File**, **NamedPipe**, or **TCP Socket**. This way you can use **HyperDbg** as a monitoring tool and gather the behavior of your target system and use it later or analyze it on other systems.
+{% endhint %}
 
 ### Custom Code
 
