@@ -10,11 +10,7 @@
 
 * [Build & Install](getting-started/build-and-install.md)
 * [Attach to HyperDbg](getting-started/attach-to-hyperdbg/README.md)
-  * [Attach to remote machine](getting-started/attach-to-hyperdbg/attach-to-remote-machine/README.md)
-    * [Physical Machine](getting-started/attach-to-hyperdbg/attach-to-remote-machine/physical-machine.md)
-    * [VMware Workstation](getting-started/attach-to-hyperdbg/attach-to-remote-machine/vmware-workstation.md)
-    * [Oracle VirtualBox](getting-started/attach-to-hyperdbg/attach-to-remote-machine/oracle-virtualbox.md)
-    * [Microsoft Hyper-V](getting-started/attach-to-hyperdbg/attach-to-remote-machine/microsoft-hyper-v.md)
+  * [Attach to a remote machine](getting-started/attach-to-hyperdbg/debug.md)
   * [Attach to local machine](getting-started/attach-to-hyperdbg/attach-to-local-machine.md)
 * [Quick Start](getting-started/quick-start.md)
 
@@ -52,6 +48,7 @@
   * [settings \(configures different options and preferences\)](commands/debugging-commands/settings.md)
   * [exit \(exit from the debugger\)](commands/debugging-commands/exit.md)
 * [Meta Commands](commands/meta-commands/README.md)
+  * [.debug \(prepare and connect to debugger\)](commands/meta-commands/.debug.md)
   * [.connect \(connect to a session\)](commands/meta-commands/.connect.md)
   * [.disconnect \(disconnect from a session\)](commands/meta-commands/.disconnect.md)
   * [.listen \(listen on a port and wait for the debugger to connect\)](commands/meta-commands/.listen.md)
@@ -140,6 +137,8 @@
   * [Conditions](design/debugger-internals/conditions.md)
   * [Actions](design/debugger-internals/actions.md)
   * [IOCTL Requests for Events](design/debugger-internals/ioctl-requests-for-events.md)
+  * [Kernel Debugger](design/debugger-internals/kernel-debugger/README.md)
+    * [Connection](design/debugger-internals/kernel-debugger/connection.md)
 * [Script Engine](design/script-engine/README.md)
   * [LL1 Grammar](design/script-engine/log-the-states-ll1-grammer.md)
 
