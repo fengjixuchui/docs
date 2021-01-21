@@ -4,11 +4,12 @@
 
 ## Getting Started
 
+* [Quick Start](getting-started/quick-start.md)
+* [FAQ](getting-started/faq.md)
 * [Build & Install](getting-started/build-and-install.md)
 * [Attach to HyperDbg](getting-started/attach-to-hyperdbg/README.md)
   * [Attach to a remote machine](getting-started/attach-to-hyperdbg/debug.md)
   * [Attach to local machine](getting-started/attach-to-hyperdbg/attach-to-local-machine.md)
-* [Quick Start](getting-started/quick-start.md)
 
 ## Using HyperDbg
 
@@ -17,7 +18,18 @@
   * [How to create a condition?](using-hyperdbg/prerequisites/how-to-create-a-condition.md)
   * [How to create an action?](using-hyperdbg/prerequisites/how-to-create-an-action.md)
 * [Examples](using-hyperdbg/examples/README.md)
+  * [Connecting To HyperDbg](using-hyperdbg/examples/connecting-to-hyperdbg.md)
+  * [Setting Breakpoints & Stepping Instructions](using-hyperdbg/examples/setting-breakpoints-and-stepping-instructions.md)
+  * [Displaying & Editing & Searching Memory](using-hyperdbg/examples/displaying-and-editing-and-searching-memory.md)
+  * [Managing Events](using-hyperdbg/examples/managing-events.md)
+  * [Hooking Any Function](using-hyperdbg/examples/hooking-any-function.md)
+  * [Intercepting All SYSCALLs](using-hyperdbg/examples/intercepting-all-syscalls.md)
+  * [Monitoring Accesses To Structures](using-hyperdbg/examples/monitoring-accesses-to-structures.md)
+  * [Triggering Special Instructions](using-hyperdbg/examples/triggering-special-instructions.md)
+  * [Identifying System Behavior](using-hyperdbg/examples/identifying-system-behavior.md)
+  * [Defeating Anti-Debug & Anti-Hypervisor Methods](using-hyperdbg/examples/defeating-anti-debug-and-anti-hypervisor-methods.md)
   * [Running HyperDbg Script](using-hyperdbg/examples/running-hyperdbg-script.md)
+  * [Scripting Language Examples](https://docs.hyperdbg.com/commands/scripting-language/examples)
 
 ## Commands
 
@@ -110,12 +122,13 @@
   * [Message Overflow](tips-and-tricks/misc/message-overflow.md)
   * [Customize Build](tips-and-tricks/misc/customize-build.md)
 
-## Style Guide
+## Contribution
 
-* [Coding Style](style-guide/coding-style.md)
-* [Command Style](style-guide/command-style.md)
-* [Doxygen Style](style-guide/doxygen-style.md)
-* [Logo & Artworks](style-guide/logo.md)
+* [Style Guide](contribution/style-guide/README.md)
+  * [Coding Style](contribution/style-guide/coding-style.md)
+  * [Command Style](contribution/style-guide/command-style.md)
+  * [Doxygen Style](contribution/style-guide/doxygen-style.md)
+* [Logo & Artworks](contribution/logo.md)
 
 ## Design
 
@@ -134,6 +147,7 @@
   * [Actions](design/debugger-internals/actions.md)
   * [IOCTL Requests for Events](design/debugger-internals/ioctl-requests-for-events.md)
   * [Kernel Debugger](design/debugger-internals/kernel-debugger/README.md)
+    * [Design Prospective](design/debugger-internals/kernel-debugger/design-prospective.md)
     * [Connection](design/debugger-internals/kernel-debugger/connection.md)
 * [Script Engine](design/script-engine/README.md)
   * [LL1 Grammar](design/script-engine/log-the-states-ll1-grammar.md)

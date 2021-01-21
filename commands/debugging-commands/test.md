@@ -20,7 +20,7 @@ Tests the functionalities of HyperDbg in the running system.
 
 \[test-case number \(hex value\)\] \(optional\)
 
-          The number of a special test-case. If you don't specify this parameter then it will check all of the test-cases.
+          The number of special test-case. If you don't specify this parameter, then it will check all of the test-cases.
 
 | Test-case Number | Description |
 | :--- | :--- |
@@ -32,13 +32,13 @@ Tests the functionalities of HyperDbg in the running system.
 The following command shows how to check all the test-cases.
 
 ```cpp
-HyperDbg > test
+HyperDbg> test
 ```
 
-The following command shows the check for **0x2** test-case.
+The following command shows the check for the **0x2** test-case.
 
 ```c
-HyperDbg > test 0x2
+HyperDbg> test 0x2
 ```
 
 ### IOCTL

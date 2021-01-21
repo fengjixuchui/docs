@@ -16,7 +16,7 @@ description: Description of 'lm' command in HyperDbg.
 
 ### Description
 
-Shows the loaded modules' base address, size, name , full path.
+Shows the loaded modules' base address, size, name, full path.
 
 ### Parameters
 
@@ -26,10 +26,10 @@ Shows the loaded modules' base address, size, name , full path.
 
 ### Examples
 
-The following command show all the modules in the system.
+The following command shows all the modules in the system.
 
 ```cpp
-HyperDbg >lm
+HyperDbg> lm
 start                   size    name            path
 
 fffff80434200000        11235328        ntoskrnl.exe    \SystemRoot\system32\ntoskrnl.exe
@@ -54,7 +54,7 @@ fffff80437f50000        49152   ntosext.sys     \SystemRoot\System32\drivers\nto
 The following example shows the modules that contain "**nt"** in their path or name.
 
 ```c
-HyperDbg >lm nt
+HyperDbg> lm nt
 start                   size    name            path
 
 fffff80434200000        11235328        ntoskrnl.exe    \SystemRoot\system32\ntoskrnl.exe
@@ -68,7 +68,7 @@ fffff804383c0000        372736  intelpep.sys    \SystemRoot\System32\drivers\int
 
 ### IOCTL
 
-This function work by calling **NtQuerySystemInformation** and does not gets the address from the kernel so it doesn't have any IOCTL.
+This function work by calling **NtQuerySystemInformation** and does not gets the address from the kernel, so it doesn't have any IOCTL.
 
 ### **Remarks**
 

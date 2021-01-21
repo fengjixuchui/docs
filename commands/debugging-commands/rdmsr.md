@@ -14,20 +14,20 @@ description: Description of 'rdmsr' command in HyperDbg.
 
 ### Description
 
-Reads the model specific register using 'rdmsr' instruction.
+Reads the model-specific register using '**rdmsr**' instruction.
 
 ### Parameters
 
 \[msr \(hex\) - ecx\]
 
-          The index of msr \(ECX Register for 'rdmsr' instruction\)
+          The index of MSR \(ECX Register for '**rdmsr**' instruction\)
 
 core \[core number\(hex\)\] \(optional\)
 
           The core that we want to read the 'rdmsr' from
 
 {% hint style="success" %}
-If you don't specify the 'core' by default it shows the msr for all cores.
+If you don't specify the 'core' by default, it shows the MSR for all cores.
 {% endhint %}
 
 ### Examples
@@ -35,7 +35,7 @@ If you don't specify the 'core' by default it shows the msr for all cores.
 The following command shows the MSR register for `c0000082` using `rdmsr` command.
 
 ```diff
-HyperDbg >rdmsr c0000082
+HyperDbg> rdmsr c0000082
 core : 0x0 - msr[c0000082] = fffff807`73553180
 core : 0x1 - msr[c0000082] = fffff807`73553180
 core : 0x2 - msr[c0000082] = fffff807`73553180
@@ -45,7 +45,7 @@ core : 0x3 - msr[c0000082] = fffff807`73553180
 The following example shows the MSR `c0000082` for core `2`.
 
 ```diff
-HyperDbg >rdmsr c0000082 core 2
+HyperDbg> rdmsr c0000082 core 2
 core : 0x2 - msr[c0000082] = fffff807`73553180
 ```
 
@@ -73,7 +73,7 @@ typedef enum _DEBUGGER_MSR_ACTION_TYPE { DEBUGGER_MSR_READ, DEBUGGER_MSR_WRITE }
 ```
 
 {% hint style="info" %}
-If you want to execute 'wrmsr' or 'rdmsr', you should set CoreNumber to DEBUGGER\_READ\_AND\_WRITE\_ON\_MSR\_APPLY\_ALL\_CORES.
+If you want to execute '**wrmsr**' or '**rdmsr**', you should set CoreNumber to `DEBUGGER_READ_AND_WRITE_ON_MSR_APPLY_ALL_CORES`.
 {% endhint %}
 
 ```c

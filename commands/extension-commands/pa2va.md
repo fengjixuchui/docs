@@ -14,7 +14,7 @@ description: Description of '!pa2va' command in HyperDbg.
 
 ### Description
 
-This command converts the PHYSICAL address to the VIRTUAL address.
+Converts the PHYSICAL address to the VIRTUAL address.
 
 ### Parameters
 
@@ -24,21 +24,21 @@ This command converts the PHYSICAL address to the VIRTUAL address.
 
 \[Process Id \(hex value\)\]
 
-          The **process id** of where you want to convert the address based on it \(if you don't specify this parameter then the current process memory layout is used\)
+          The **process id** of where you want to convert the address based on it \(if you don't specify this parameter, then the current process memory layout is used\)
 
 ### Examples
 
 The following command shows the physical address of `21c9370`.
 
 ```diff
-HyperDbg >!va2pa 21c9370
+HyperDbg> !va2pa 21c9370
 FFFFF8004EBC9370
 ```
 
 The following command shows the physical address of `21c9370`in the process layout of process id \(0x4\).
 
 ```diff
-HyperDbg >!va2pa 21c9370 pid 0x4
+HyperDbg> !va2pa 21c9370 pid 0x4
 FFFFF8004EBC9370
 ```
 
@@ -57,14 +57,14 @@ typedef struct _DEBUGGER_VA2PA_AND_PA2VA_COMMANDS {
 } DEBUGGER_VA2PA_AND_PA2VA_COMMANDS, *PDEBUGGER_VA2PA_AND_PA2VA_COMMANDS;
 ```
 
-You should only fill the **VirtualAddress** of the above structure when you want a physical address and fill the above **PhysicalAddress** when you want a virtual address. Also set **IsVirtual2Physical** to **`true`** in the case of virtual-to-physical and set it to **`false`** in the case of physical-to-virtual.
+You should only fill the **VirtualAddress** of the above structure when you want a physical address and fill the above **PhysicalAddress** when you want a virtual address. Also, set **IsVirtual2Physical** to **`true`** in the case of virtual-to-physical and set it to **`false`** in the case of physical-to-virtual.
 
-If you want to convert based on another process memory layout then put its process id, otherwise, put the current process id on it. **ProcessId** can't be `null`.
+If you want to convert based on another process memory layout, then put its process ID. Otherwise, put the current process id on it. **ProcessId** can't be `null`.
 
 ### **Remarks**
 
 {% hint style="success" %}
-If the physical address or process id does not exist then it shows **`0`**.
+If the physical address or process id does not exist, then it shows **`0`**.
 {% endhint %}
 
 ### Requirements

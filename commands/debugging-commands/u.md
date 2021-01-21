@@ -19,7 +19,7 @@ description: 'Description of ''u, u2'' command in HyperDbg.'
 \*\*\*\*
 
 {% hint style="info" %}
-**u** disassembles as x64 and **u2** disassembles as x86.
+**u** disassembles as x64, and **u2** disassembles as x86.
 {% endhint %}
 
 ### Description
@@ -38,7 +38,7 @@ l \[Length\] \(optional\)
 
 pid \[process id\]  \(optional\)
 
-          The process id in hex format that we want to see the memory from its context \(**cr3**\).
+          The process ID in hex format that we want to see the memory from its context \(**cr3**\).
 
 {% hint style="info" %}
 If you don't specify the pid, then the default pid is the current process \(HyperDbg\) process layout of memory.
@@ -49,7 +49,7 @@ If you don't specify the pid, then the default pid is the current process \(Hype
 The following command is used when we want to disassemble the content of memory \(x64\) at **``fffff800`3ad6f010``** with length of `0x50` bytes from the memory layout view of process \(`4` a.k.a. system process\).
 
 ```diff
-HyperDbg >u fffff800`3ad6f010 l 50 pid 4
+HyperDbg> u fffff800`3ad6f010 l 50 pid 4
 fffff800`3ad6f010 48 89 5C 24 08                      mov qword ptr ss:[rsp+0x08], rbx
 fffff800`3ad6f015 48 89 6C 24 10                      mov qword ptr ss:[rsp+0x10], rbp
 fffff800`3ad6f01a 48 89 74 24 18                      mov qword ptr ss:[rsp+0x18], rsi
@@ -74,7 +74,7 @@ fffff800`3ad6f05c 89 5C 24 20                         mov dword ptr ss:[rsp+0x20
 The following example shows the assembly content \(x64\) of memory at ``fffff800`3ad6f010`` from current process memory layout.
 
 ```diff
-HyperDbg >u fffff800`3ad6f010
+HyperDbg> u fffff800`3ad6f010
 fffff800`3ad6f010 48 89 5C 24 08                      mov qword ptr ss:[rsp+0x08], rbx
 fffff800`3ad6f015 48 89 6C 24 10                      mov qword ptr ss:[rsp+0x10], rbp
 fffff800`3ad6f01a 48 89 74 24 18                      mov qword ptr ss:[rsp+0x18], rsi
@@ -108,7 +108,7 @@ typedef struct _DEBUGGER_READ_MEMORY {
 } DEBUGGER_READ_MEMORY, * PDEBUGGER_READ_MEMORY;
 ```
 
-Where `Pid` is the process id, `Address` is the target location address and `size` is the length of byte that you need to read. 
+Where `Pid` is the process id, `Address` is the target location address and `size` is the length of the byte that you need to read. 
 
 `MemoryType`is either **virtual** or **physical**.
 
@@ -116,13 +116,13 @@ Where `Pid` is the process id, `Address` is the target location address and `siz
 typedef enum _DEBUGGER_READ_MEMORY_TYPE { DEBUGGER_READ_PHYSICAL_ADDRESS, DEBUGGER_READ_VIRTUAL_ADDRESS } DEBUGGER_READ_MEMORY_TYPE;
 ```
 
-`ReadingType` is either from **kernel** or form **vmx root**, currently only the reading from kernel is implemented.
+`ReadingType` is either from the **kernel** or from the **vmx root**. Currently, only the reading from the kernel is implemented.
 
 ```c
 typedef enum _DEBUGGER_READ_READING_TYPE { READ_FROM_KERNEL, READ_FROM_VMX_ROOT } DEBUGGER_READ_READING_TYPE;
 ```
 
-If you don't want to directly read from kernel, use the following **HyperDbg Routine**.
+If you don't want to read from the kernel directly, use the following **HyperDbg Routine**.
 
 ```c
 void HyperDbgReadMemoryAndDisassemble(DEBUGGER_SHOW_MEMORY_STYLE Style, UINT64 Address,
@@ -131,20 +131,20 @@ void HyperDbgReadMemoryAndDisassemble(DEBUGGER_SHOW_MEMORY_STYLE Style, UINT64 A
                         UINT Size);
 ```
 
-The above function fill the IOCTL structure and shows the memory content, it also is able to disassemble the memory, you can specify one of the following `styles` to show the memory.
+The above function fills the IOCTL structure and shows the memory content. It is also able to disassemble the memory. You can specify one of the following `styles` to show the memory.
 
 ```c
 typedef enum _DEBUGGER_SHOW_MEMORY_STYLE { DEBUGGER_SHOW_COMMAND_DISASSEMBLE64, DEBUGGER_SHOW_COMMAND_DISASSEMBLE32, DEBUGGER_SHOW_COMMAND_DB, DEBUGGER_SHOW_COMMAND_DC, DEBUGGER_SHOW_COMMAND_DQ, DEBUGGER_SHOW_COMMAND_DD } DEBUGGER_SHOW_MEMORY_STYLE;
 ```
 
-**For disassembling use the `DEBUGGER_SHOW_COMMAND_DISASSEMBLE64` as the `Style` for x64 disassembling and for disassembling x86 use the `DEBUGGER_SHOW_COMMAND_DISASSEMBLE32`.**
+**For disassembling, use the `DEBUGGER_SHOW_COMMAND_DISASSEMBLE64` as the `Style` for x64 disassembling and for disassembling x86, use the `DEBUGGER_SHOW_COMMAND_DISASSEMBLE32`.**
 
 ### **Remarks**
 
 * If you don't specify the length, the default length for HyperDbg is 0x40 Bytes.
 
 {% hint style="warning" %}
-Please note that you should specify space between 'l' and the length, for HyperDbg for example 'l10' is invalid but 'l 10' is valid. \(It's opposes to windbg\).
+Please note that you should specify space between 'l' and the length for HyperDbg. For example, 'l10' is invalid, but 'l 10' is valid. \(It's opposed to windbg\).
 {% endhint %}
 
 {% hint style="success" %}

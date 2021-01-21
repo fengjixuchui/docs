@@ -14,7 +14,7 @@ description: Description of '!pte' command in HyperDbg.
 
 ### Description
 
-The **!pte** command displays the **PML4E**, **PDPTE**, **PDE**, **PTE** for the specified address.  
+Displays the **PML4E**, **PDPTE**, **PDE**, **PTE** for the specified address.  
 
 
 ### Parameters
@@ -28,7 +28,7 @@ The **!pte** command displays the **PML4E**, **PDPTE**, **PDE**, **PTE** for the
 The following command shows the page-level entries `fffff80040f00c28` .
 
 ```diff
-HyperDbg >!pte fffff80040f00c28
+HyperDbg> !pte fffff80040f00c28
 VA fffff80040f00c28
 PML4E (PXE) at ffff83c1e0f07f80 contains 0000000004108063
 PDPT (PPE) at ffff83c1e0ff0008  contains 000000000411c063
@@ -39,7 +39,7 @@ PTE at ffff83fc00207800 contains 8900000006470863
 The following command shows the page-level entries `fffff8003ad6f010`. Note that some entries might have a large **PDE** and no **PTE**.
 
 ```diff
-HyperDbg >!pte fffff8003ad6f010
+HyperDbg> !pte fffff8003ad6f010
 VA fffff8003ad6f010
 PML4E (PXE) at ffff83c1e0f07f80 contains 0000000004108063
 PDPT (PPE) at ffff83c1e0ff0000  contains 0000000004109063
@@ -72,16 +72,16 @@ typedef struct _DEBUGGER_READ_PAGE_TABLE_ENTRIES_DETAILS {
     *PDEBUGGER_READ_PAGE_TABLE_ENTRIES_DETAILS;
 ```
 
-You should only fill the VirtualAddress of the above structure, when the IOCTL returns from the kernel, other parts of this structure are filled with valid entry virtual addresses and the entry value itself.
+You should only fill the VirtualAddress of the above structure when the IOCTL returns from the kernel. Other parts of this structure are filled with valid entry virtual addresses and the entry value itself.
 
-You can map the value to the specific structure of each entry, look at Intel SDM for more information.
+You can map the value to each entry's structure \(Look at Intel SDM for more information\).
 
-Also the structures are available in `MemoryMapper.h`, but they might be outdated.
+Also, the structures are available in `MemoryMapper.h` but they might be outdated.
 
 ### **Remarks**
 
 {% hint style="success" %}
-If the VirtualAddress and Value of entry for PDE and PTE from the kernel IOCTL is the same, this shows that the entry has a LARGE PDE and doesn't have PTE.
+If the **VirtualAddress** and Value of entry for PDE and PTE from the kernel IOCTL are the same, the entry has a LARGE PDE and doesn't have PTE.
 {% endhint %}
 
 ### Requirements

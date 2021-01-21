@@ -27,7 +27,7 @@ This command queries or changes the value of options and preferences.
          Target value to modify the option.
 
 {% hint style="success" %}
-Each option has its own different value, for example, some options might be on or off and some others might be custom numbers or names.
+Each option has its own value; for example, some options might be on or off, and others might be custom numbers or names.
 {% endhint %}
 
 ### Options
@@ -38,11 +38,11 @@ Each option has its own different value, for example, some options might be on o
 | **autounpause** | on \| off | on |
 | **syntax** | intel \| att \| masm | intel |
 
-**autoflush :** if you turn **autoflush** on, after each disabling or clearing an event using '[events](https://docs.hyperdbg.com/commands/debugging-commands/events)' command, all the possible pending buffers and messages from **all the commands \(not just the command that you disabled or removed\)** that are stored to be received by the user-mode from the kernel-mode and when you press '[g](https://docs.hyperdbg.com/commands/debugging-commands/g)', you no longer see any results from previous commands; however, some commands might continue generating new messages, and those new messages won't be removed. 
+**autoflush :** if you turn **autoflush** on, after each disabling or clearing an event using the '[events](https://docs.hyperdbg.com/commands/debugging-commands/events)' command, all the possible pending buffers and messages from **all the commands \(not just the command that you disabled or removed\)** that are stored to be received by the user-mode from the kernel-mode and when you press '[g](https://docs.hyperdbg.com/commands/debugging-commands/g)', you no longer see any results from previous commands; however, some commands might continue generating new messages, and those new messages won't be removed. 
 
 You can also perform the **autoflush** manually by running the '[flush](https://docs.hyperdbg.com/commands/debugging-commands/flush)' command.
 
-**autounpause** : if you turn **autounpause** on, then if you press CTRL+C or run '[pause](https://docs.hyperdbg.com/commands/debugging-commands/pause)' command to break to the debugger, every new event will automatically turn off your break and you'll start receiving events and messages from the kernel-mode buffers. However, if you turn it off, then you won't receive kernel buffers and messages when you invoke a new event as the debugger will remain in paused state \(for example, paused because of '[pause](https://docs.hyperdbg.com/commands/debugging-commands/pause)' command or CTRL+C\), in this case, you can resume receiving messages from the kernel-mode buffer by running '[g](https://docs.hyperdbg.com/commands/debugging-commands/g)' command.
+**autounpause** : if you turn **autounpause** on, then if you press CTRL+C or run the '[pause](https://docs.hyperdbg.com/commands/debugging-commands/pause)' command to break to the debugger, every new event will automatically turn off your break, and you'll start receiving events and messages from the kernel-mode buffers. However, if you turn it off, then you won't receive kernel buffers and messages when you invoke a new event as the debugger will remain in the paused state \(for example, paused because of '[pause](https://docs.hyperdbg.com/commands/debugging-commands/pause)' command or CTRL+C\), in this case, you can resume receiving messages from the kernel-mode buffer by running '[g](https://docs.hyperdbg.com/commands/debugging-commands/g)' command.
 
 **syntax** : specifies the syntax of disassembler for '[!u and !u2](https://docs.hyperdbg.com/commands/extension-commands/u)' commands.
 
@@ -51,28 +51,28 @@ You can also perform the **autoflush** manually by running the '[flush](https://
 The following command shows the state of **`autounpause`** option.
 
 ```diff
-HyperDbg > settings autounpause
+HyperDbg> settings autounpause
 auto-unpause is enabled
 ```
 
 The following command turns **`autounpause`** on.
 
 ```diff
-HyperDbg >settings autounpause on
+HyperDbg> settings autounpause on
 set auto-unpause to enabled
 ```
 
 The following command turns **`autounpause`** off.
 
 ```text
-HyperDbg >settings autounpause off
+HyperDbg> settings autounpause off
 set auto-unpause to disabled
 ```
 
-The following command shows different **syntax** used in the disassembler, you can choose your favorite **syntax** to show in '[!u and !u2' ](https://docs.hyperdbg.com/commands/extension-commands/u)commands.
+The following command shows the different **syntax** used in the disassembler. You can choose your favorite **syntax** to show in '[!u and !u2' ](https://docs.hyperdbg.com/commands/extension-commands/u)commands.
 
 ```c
-HyperDbg >settings syntax intel
+HyperDbg> settings syntax intel
 set syntax to intel
 
 
@@ -94,10 +94,10 @@ fffff804`2d16f045 8B F9                               mov edi, ecx
 fffff804`2d16f047 4C 8B 88 C0 00 00 00                mov r9, qword ptr ds:[rax+0xC0]
 
 
-HyperDbg >settings syntax att
+HyperDbg> settings syntax att
 set syntax to at&t
 
-HyperDbg >u fffff804`2d16f010
+HyperDbg> u fffff804`2d16f010
 fffff804`2d16f010 48 89 5C 24 08                      movq %rbx, %ss:0x08(%rsp)
 fffff804`2d16f015 48 89 6C 24 10                      movq %rbp, %ss:0x10(%rsp)
 fffff804`2d16f01a 48 89 74 24 18                      movq %rsi, %ss:0x18(%rsp)
@@ -115,7 +115,7 @@ fffff804`2d16f045 8B F9                               mov %ecx, %edi
 fffff804`2d16f047 4C 8B 88 C0 00 00 00                movq %ds:0xC0(%rax), %r9
 
 
-HyperDbg >settings syntax masm
+HyperDbg> settings syntax masm
 set syntax to masm
 
 HyperDbg >u fffff804`2d16f010
