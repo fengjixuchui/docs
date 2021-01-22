@@ -38,9 +38,8 @@ If you want to apply to a process name, then use the following command.
 HyperDbg> !hide name procexp.exe
 ```
 
-{% hint style="info" %}
 Transparent-mode is under active development, and on each version, we add new methods to this mode to make sure that HyperDbg is transparent. However, this mode still needs a lot of contributions.
 
-If you think you can add new methods for transparency, don't forget to contribute or ping us on [GitHub](https://github.com/HyperDbg/HyperDbg). 
-{% endhint %}
+If you think you can add new methods for transparency, don't forget to contribute or ping us on [GitHub](https://github.com/HyperDbg/HyperDbg).[  
+](https://docs.hyperdbg.com/tips-and-tricks/considerations/the-unsafe-behavior)
 

@@ -31,7 +31,7 @@ HyperDbg> .debug remote serial 115200 com3
 If you want to use a named pipe instead of a COM port, you can execute the following command in the debugger \(Host\).
 
 ```text
-HyperDbg> .debug remote namedpipe \\\\.\\pipe\\HyperDbgPipe
+HyperDbg> .debug remote namedpipe \\.\pipe\HyperDbgPipe
 ```
 
 After you tell the debugger to listen on a COM port or a named pipe, now you can run the following command in the debuggee.
@@ -77,6 +77,10 @@ HyperDbg> .debug prepare serial 115200 com2
 ```
 
 Most of the times, if the serial port is the only serial device that you add to the virtual machine, then the name of the connected port is `com2`. However, you can see the exact name of the COM port on the guest's device manager.
+
+{% hint style="info" %}
+If you see an error for driver signature enforcement, please visit [here](https://docs.hyperdbg.com/using-hyperdbg/examples/connecting-to-hyperdbg#driver-signature-enforcement-error).
+{% endhint %}
 
 ## Connect to Debuggee \(VMI Mode\)
 
