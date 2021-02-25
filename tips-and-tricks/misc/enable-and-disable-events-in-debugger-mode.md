@@ -44,9 +44,15 @@ HyperDbg> events
 0       (disabled)          !syscall 55 pid 490
 ```
 
-Now, we try to debug our target process, and when we halt the debuggee in our target process, we can use the following command \(from script-engine\) to re-enable the event.
+Now, we try to debug our target process, and when we halt the debuggee in our target process, we can use the '[events](https://docs.hyperdbg.com/commands/debugging-commands/events)' command or '[EnableEvent](https://docs.hyperdbg.com/commands/scripting-language/functions/enableevent)' function \(from script-engine\) to re-enable the event.
 
 Note that `0` is the event number which we get from the '[events](https://docs.hyperdbg.com/commands/debugging-commands/events)' command.
+
+```c
+HyperDbg> events e 0
+```
+
+or
 
 ```c
 HyperDbg> ? EnableEvent(0);
@@ -54,13 +60,25 @@ HyperDbg> ? EnableEvent(0);
 
 After that, we receive the events relating to the event with event number `0`; thus, we won't lose any events as the guest remained paused while the above expression command is executed.
 
-At last, if we want to disable the event, we can use the following command.
+At last, if we want to disable the event, we can use the following commands.
+
+```c
+HyperDbg> events d 0
+```
+
+or
 
 ```c
 HyperDbg> ? DisableEvent(0);
 ```
 
 In the above examples, we used [**EnableEvent**](https://docs.hyperdbg.com/commands/scripting-language/functions/enableevent) and [**DisableEvent**](https://docs.hyperdbg.com/commands/scripting-language/functions/disableevent) functions of script-engine using the '[?](https://docs.hyperdbg.com/commands/debugging-commands/eval)' command.
+
+{% hint style="danger" %}
+**Important note**
+
+If you are operating in [Debugger Mode](https://docs.hyperdbg.com/using-hyperdbg/prerequisites/operation-modes#debugger-mode), you can enable or disable events while the debuggee is in a halt state. However, if you want to clear an event or all events then you lose the context as the debuggee is continued for some time to process the **clear** operation.
+{% endhint %}
 
 Using this way, we can solve the problem of losing some events in HyperDbg.
 
