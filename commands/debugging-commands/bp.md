@@ -10,14 +10,18 @@ description: Description of 'bp' command in HyperDbg.
 
 ### Syntax
 
-> bp \[address\] \[pid \(hex value\)\] \[core \(hex value\)\] \[imm \(yes\|no\)\] \[event options\]
+> bp \[address\] \[ pid \| tid \| core \(hex value\)\]
 
 ### Description
 
-Puts a hidden breakpoint \(**0xcc**\) on the target function in user-mode and kernel-mode without modifying the content of memory in the case of reading/writing.
+Puts a breakpoint \(**0xcc**\) on the target function in user-mode and kernel-mode.
+
+{% hint style="danger" %}
+In **HyperDbg**, the 'bp' breakpoints are **NOT** [events](https://docs.hyperdbg.com/design/debugger-internals/events). If you want to use breakpoint in an event-like form \(e.g., if you want to create logs using script-engine\), you should use [!epthook](https://docs.hyperdbg.com/commands/extension-commands/epthook) command instead.
+{% endhint %}
 
 {% hint style="info" %}
-In **HyperDbg**, the 'bp' command is the same as the '[!epthook](https://docs.hyperdbg.com/commands/extension-commands/epthook)' command.
+If you use the 'bp' command, **HyperDbg** won't hide your breakpoint for the applications that read the memory. The only reason to use '**bp**' instead of [!epthook](https://docs.hyperdbg.com/commands/extension-commands/epthook) is that '**bp**' is guaranteed to keep debuggee in a halt state \(in Debugger Mode\); thus, nothing will change during its execution. However, the in [!epthook](https://docs.hyperdbg.com/commands/extension-commands/epthook) the guest will be continued for some time, and you lose the current context.
 {% endhint %}
 
 ### Parameters
@@ -26,125 +30,105 @@ In **HyperDbg**, the 'bp' command is the same as the '[!epthook](https://docs.hy
 
           The **Virtual** address of where we want to put a breakpoint.
 
-**\[pid \(hex value\)\]**
+**\[pid \| tid \| core \(hex value\)\]** \(optional\)
 
-          Optional value to trigger the event in just a specific process. Add `pid xx` to your command; thus, the command will be executed if the process id is equal to `xx`. If you don't specify this option, then by default, you receive events on all processes.
-
-**\[core \(hex value\)\]**
-
-          Optional value to trigger the event in just a specific core. Add `core xx` to your command thus command will be executed if core id is equal to `xx`. If you don't specify this option, then by default, you receive events on all cores.
-
-**\[imm \(yes\|no\)\]**
-
-          Optional value in which `yes` means the results \(printed texts in scripts\) should be delivered immediately to the debugger. `no` means that the results can be accumulated and delivered as a couple of messages when the buffer is full; thus, it's substantially faster but not real-time. By default, this value is set to  `yes`.
-
-**\[event options\]**
-
-          Regular event parameters are used in HyperDbg events. \(For more information, read [this ](https://docs.hyperdbg.com/using-hyperdbg/prerequisites)topic\)
+          Optional value to trigger breakpoint in just one special process or one special thread, or one special core. Add `pid xx` to your command or `tid yy` or `core zz`; thus, the command will be executed if the process id is equal to `xx` or the thread id is equal to `yy` or the core is equal to `zz` . If you don't specify these options, then by default, you receive breakpoints on all conditions. See the **Remarks** section for more information about **pid**.
 
 ### Context
 
-As the **Context** \(**`r8`** in custom code and **`rdx`** in condition code register\) to the event trigger, **HyperDbg** sends the **virtual** address of where put the hidden breakpoint.
+As the **Context**, HyperDbg sends the **virtual** address of where the breakpoint is triggered \(`RIP` of the triggered breakpoint\).
 
-### Debugger
+### Examples
 
-This event supports three debugging mechanisms.
+If you want to put breakpoints on `fffff801639b1030`, `fffff801639b1035`, `fffff801639b103a`, and `fffff801639b103f`, you can use the following commands.
 
-* Break
-* Script
-* Custom Code
-
-{% hint style="info" %}
-Please read  "[How to create a condition?](https://docs.hyperdbg.com/using-hyperdbg/prerequisites/how-to-create-a-condition)" if you need a conditional event, a conditional event can be used in all "**Break**", "**Script**", and "**Custom Code**".
-{% endhint %}
-
-### Break
-
-Imagine we want to put a breakpoint on ``fffff800`4ed6f010``, this will break into the debugger when the target address hits and gives the control back to you.
-
-```c
-HyperDbg> bp fffff800`4ed6f010 
+```text
+HyperDbg> bp fffff801`639b1030
 ```
 
-### Script
-
-Using the following command, you can use HyperDbg's Script Engine. You should replace the string between braces \(`HyperDbg Script Here`\) with your script. You can find script examples [here](https://docs.hyperdbg.com/commands/scripting-language/examples). 
-
-    HyperDbg> bp fffff800`4ed6f010 script { HyperDbg Script Here }
-
-The above command when messages don't need to be delivered immediately.
-
-    HyperDbg> bp fffff800`4ed6f010 script { HyperDbg Script Here } imm no
-
-**Script \(From File\)**
-
-If you saved your script into a file, then you can add `file:` instead of a script and append the file path to it. For example, the following examples show how you can run a script from `file:c:\users\sina\desktop\script.txt`. 
-
-    HyperDbg> bp fffff800`4ed6f010 script {file:c:\users\sina\desktop\script.txt}
-
-{% hint style="success" %}
-You can use [**event forwarding**](https://docs.hyperdbg.com/tips-and-tricks/misc/event-forwarding) to forward the event monitoring results from this event and other events to an external source, e.g., **File**, **NamedPipe**, or **TCP Socket**. This way, you can use **HyperDbg** as a monitoring tool and gather your target system's behavior and use it later or analyze it on other systems.
-{% endhint %}
-
-### Custom Code
-
-Please read  "[How to create an action?](https://docs.hyperdbg.com/using-hyperdbg/prerequisites/how-to-create-an-action)" to get an idea about how to run the custom buffer code in **HyperDbg**.
-
-{% hint style="warning" %}
-Your custom code will be executed in vmx-root mode. Take a look at [this topic](https://docs.hyperdbg.com/tips-and-tricks/considerations/vmx-root-mode-vs-vmx-non-root-mode) for more information. Running code in vmx-root is considered "[unsafe](https://docs.hyperdbg.com/tips-and-tricks/considerations/the-unsafe-behavior)".
-{% endhint %}
-
-#### Run Custom Code \(Unconditional\)
-
-Putting a breakpoint on `fffff801deadbeef` and run 3 nops whenever the breakpoint is triggered. Take a look at [Run Custom Code](https://docs.hyperdbg.com/using-hyperdbg/prerequisites/how-to-create-an-action#run-custom-codes) for more information.
-
-```c
-HyperDbg> bp fffff801deadbeef code {90 90 90}
+```text
+HyperDbg> bp fffff801`639b1035
 ```
 
-#### Run Custom Code \(Conditional\)
-
-Putting a breakpoint on `fffff801deadbeef` and run 3 nops whenever the breakpoint is triggered and also 3 nops condition. Take a look at [Run Custom Code](https://docs.hyperdbg.com/using-hyperdbg/prerequisites/how-to-create-an-action#run-custom-codes) and [how to create a condition](https://docs.hyperdbg.com/using-hyperdbg/prerequisites/how-to-create-a-condition) for more information.
-
-```c
-HyperDbg> bp fffff801deadbeef code {90 90 90} condition {90 90 90}
+```text
+HyperDbg> bp fffff801`639b103a
 ```
 
-{% hint style="success" %}
-Keep in mind; a conditional event can be used in **Breaking to Debugger** and **Running Scripts** too.
-{% endhint %}
+```text
+HyperDbg> bp fffff801`639b103f
+```
+
+After that, you can see a list of active breakpoints using the '[bl](https://docs.hyperdbg.com/commands/debugging-commands/bl)' command.
+
+```text
+HyperDbg> bl
+id   address           status
+--   ---------------   --------
+01   fffff801639b1030  enabled
+02   fffff801639b1035  enabled
+03   fffff801639b103a  enabled
+04   fffff801639b103f  enabled
+```
 
 ### IOCTL
 
-This command uses the same method to [send IOCTL for regular events](https://docs.hyperdbg.com/design/debugger-internals/ioctl-requests-for-events). 
+This commands works over serial by sending the serial packets to the remote computer.
 
-Use `HIDDEN_HOOK_EXEC_CC` as **EventType**, ****and send the address of where you want to hook in `OptionalParam1`in **DEBUGGER\_GENERAL\_EVENT\_DETAIL**.
+First of all, you should fill the following structure, set the `Address` to your target virtual address that you want to put a breakpoint on it, and fill `Pid` to your special process id, and/or `Tid` to your special thread id, and/or `Core` to your special core.
 
-### Design
+```c
+typedef struct _DEBUGGEE_BP_PACKET {
 
-Take a look at "[Design of !epthook](https://docs.hyperdbg.com/design/features/vmm-module/design-of-epthook)" to see how does it work.
+  UINT64 Address;
+  UINT32 Pid;
+  UINT32 Tid;
+  UINT32 Core;
+  UINT32 Result;
+
+} DEBUGGEE_BP_PACKET, *PDEBUGGEE_BP_PACKET;
+```
+
+If you want your breakpoint to be triggered for all processes, threads, and cores, then choose `DEBUGGEE_BP_APPLY_TO_ALL_PROCESSES`, `DEBUGGEE_BP_APPLY_TO_ALL_THREADS`, `DEBUGGEE_BP_APPLY_TO_ALL_CORES`.
+
+The next step is sending the above structure to the debuggee when debuggee is paused and waiting for new command on **vmx-root** mode.
+
+You should send the above structure with `DEBUGGER_REMOTE_PACKET_REQUESTED_ACTION_ON_VMX_ROOT_BP` as `RequestedAction` and `DEBUGGER_REMOTE_PACKET_TYPE_DEBUGGER_TO_DEBUGGEE_EXECUTE_ON_VMX_ROOT` as `PacketType`.
+
+In return, the debuggee sends the above structure with the following type.
+
+```c
+DEBUGGER_REMOTE_PACKET_REQUESTED_ACTION_DEBUGGEE_RESULT_OF_BP
+```
+
+In the returned structure, the `Result` is filled by the kernel.
+
+If the `Result` is `DEBUGEER_OPERATION_WAS_SUCCESSFULL`, then the operation was successful. Otherwise, the returned result is an error.
+
+The following function is responsible for sending breakpoint buffers in the debugger.
+
+```c
+BOOLEAN KdSendBpPacketToDebuggee(PDEBUGGEE_BP_PACKET BpPacket);
+```
 
 ### **Remarks**
 
-You can disable or clear breakpoints using the '[events](https://docs.hyperdbg.com/commands/debugging-commands/events)' command.
-
-{% hint style="danger" %}
-You shouldn't use any of **!monitor**, **!epthook**, **bp**, and **!epthook2** commands on the same page \(4KB\) simultaneously. For example, when you put a hidden hook \(**!epthook2**\) on **0x10000005,** you shouldn't use any of **!monitor** or **!epthook** or **bp** commands on the address starting from **0x10000000** to **0x10000fff**.
-
- You can use **!epthook** or **bp** \(just _**!epthook**_ not **!epthook2** and not **!monitor**\) on two or more addresses on the same page \(means that you can use the **!epthook** or **bp** multiple times for addresses between a single page or putting multiple hidden breakpoints on a single page\). But you can't use **!monitor** or **!epthook2** twice on the same page.
-{% endhint %}
+In this command, **`pid xx`** does not mean that we will change the layout to a new process, it means that the address should be available in the current process layout but will be triggered only on the process with process id equal to **`xx`**, you can use the '[.process](https://docs.hyperdbg.com/commands/meta-commands/.process)' command to switch to a new process if you want to put a breakpoint on the layout of another process. 
 
 This command is guaranteed to keep debuggee in a halt state \(in Debugger Mode\); thus, nothing will change during its execution.
 
 ### Requirements
 
-Post-Nehalem Processor \(EPT\)
-
-Processor with Execute-only Pages Support
+None
 
 ### Related
 
 [!epthook \(hidden hook with EPT - stealth breakpoints\)](https://docs.hyperdbg.com/commands/extension-commands/epthook)
 
-[!epthook2 \(hidden hook with EPT - detours\)](https://docs.hyperdbg.com/commands/extension-commands/epthook2)
+[bl \(list breakpoints\)](https://docs.hyperdbg.com/commands/debugging-commands/bl)
+
+[be \(enable breakpoints\)](https://docs.hyperdbg.com/commands/debugging-commands/be)
+
+[bd \(disable breakpoints\)](https://docs.hyperdbg.com/commands/debugging-commands/bd)
+
+[bc \(clear and remove breakpoints\)](https://docs.hyperdbg.com/commands/debugging-commands/bc)
 

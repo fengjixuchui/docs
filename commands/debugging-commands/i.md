@@ -1,22 +1,30 @@
 ---
-description: Description of 'p' command in HyperDbg.
+description: Description of 'i' command in HyperDbg.
 ---
 
-# p \(step-over\)
+# i \(instrument step-in\)
 
 ### Command
 
-> p
+> i
 
-> pr
+> ir
 
 ### Syntax
 
-> p\[r\] \[count \(hex value\)\]
+> i\[r\] \[count \(hex value\)\]
 
 ### Description
 
-Executes a single instruction \(step-over\) and optionally displays the resulting values of all registers and flags.
+Executes a single instruction \(step-in\) and optionally displays the resulting values of all registers and flags.
+
+{% hint style="success" %}
+The difference between this command and the '[t](https://docs.hyperdbg.com/commands/debugging-commands/t)' command is that no other cores and other threads find a chance to be executed during the stepping process; the system is fully halted, and only the current core will execute just one instruction and halts again.
+{% endhint %}
+
+{% hint style="info" %}
+This command gives you the ability to follow system-calls \(SYSCALLs\) and all the exceptions \(including **page-faults**\) from user-mode to kernel-mode and from kernel-mode to user-mode. For example, in the middle of executing one instruction in user-mode, a page-fault might happen, then if you use this command, the next instruction is in the kernel-mode **page-fault** handler. Another example, you can follow a _syscall_ from user-mode, then the next instruction is in kernel-mode **syscall handler**, and this way, you can trace the execution between different rings.
+{% endhint %}
 
 ### Parameters
 
@@ -26,17 +34,17 @@ Executes a single instruction \(step-over\) and optionally displays the resultin
 
 ### Examples
 
-If you want to step-over one instruction.
+If you want to instrument step-in one instruction.
 
 ```text
-HyperDbg> p
+HyperDbg> i
 fffff801`68d91267    41 5B                               pop r11
 ```
 
-If you want to step-over one instruction and view the registers.
+If you want to instrument step-in one instruction and view the registers.
 
 ```c
-HyperDbg> pr
+HyperDbg> ir
 fffff801`68d91269    41 5A                               pop r10
 RAX=0000000000000000 RBX=ffff948cbf6599d0 RCX=0000000000000024
 RDX=0000000000000000 RSI=0000000000000000 RDI=ffff948cc266d670
@@ -50,10 +58,10 @@ CS 0010 SS 0018 DS 002b ES 002b FS 0053 GS 002b
 RFLAGS=0000000000040046
 ```
 
-If you want to step-over for `5` instructions.
+If you want to instrument step-in for `5` instructions.
 
 ```c
-HyperDbg> p 5
+HyperDbg> i 5
 fffff801`68d9126b    9D                                  popfq
 fffff801`68d9126c    C3                                  ret
 fffff801`63a12948    6A D1                               push 0xFFFFFFFFFFFFFFD1
@@ -112,11 +120,11 @@ BOOLEAN KdSendStepPacketToDebuggee(DEBUGGER_REMOTE_STEPPING_REQUEST StepRequestT
 
 ### **Remarks**
 
-This command will set a **trap flag** in debuggee and continue all the cores. After executing one instruction, it halts the debuggee again.
+This command will set a **Monitor Trap Flag** in debuggee and continue just the current executing core. After executing one instruction, it halts the debuggee again.
 
-If the target instruction is a call instruction, it configures the first hardware debug register breakpoint to the instruction after that call. After that, it continues the debuggee and waits for the call to be returned and the next instruction \(after the call\) to be executed.
+If the currently executing instruction is a **call** instruction, it will follow and enter the call instruction. 
 
-All cores and threads \(except the currently executing thread\) find a chance to be executed between each step in this type of stepping.
+HyperDbg guarantees that all cores and threads won't find a chance to be executed between each step in this type of stepping.
 
 ### Requirements
 
@@ -124,9 +132,7 @@ None
 
 ### Related
 
+[p \(step-over\)](https://docs.hyperdbg.com/commands/debugging-commands/p)
+
 [t \(step-in\)](https://docs.hyperdbg.com/commands/debugging-commands/t)
-
-[i \(instrument step-in\)](https://docs.hyperdbg.com/commands/debugging-commands/i)
-
-
 

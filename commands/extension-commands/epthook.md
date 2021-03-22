@@ -20,6 +20,10 @@ Puts a hidden breakpoint \(0xcc\) on the target function in user-mode and kernel
 This implementation of the hidden hook causes vm-exit when it triggers. A faster implementation of EPT hidden hooks is [!epthook2](https://docs.hyperdbg.com/commands/extension-commands/epthook2), which is without vm-exits. Still, it has some limitations, as described in the documentation.
 {% endhint %}
 
+{% hint style="danger" %}
+If you want to keep the current context without continuing the debuggee, you should use the '[bp](https://docs.hyperdbg.com/commands/debugging-commands/bp)' command instead.
+{% endhint %}
+
 ### Parameters
 
 **\[address\]**
@@ -126,8 +130,6 @@ Take a look at "[Design of !epthook](https://docs.hyperdbg.com/design/features/v
 
 ### **Remarks**
 
-In **HyperDbg**, '!epthook' and the '[bp](https://docs.hyperdbg.com/commands/debugging-commands/bp)' command are the same.
-
 This command is much slower than **!epthook2**, ****because it cause vm-exits, but on the other hand, this implementation doesn't have any limitation. For example, you can use this command for hooking user-mode while you can't use **!epthook2** on user-mode.
 
 **Why don't we use a physical address to find this command?** 
@@ -135,9 +137,9 @@ This command is much slower than **!epthook2**, ****because it cause vm-exits, b
 Generally, it's better to use the physical address. Still, we don't use the physical address here \(**!epthook2** uses physical address\) because if we want to compare **physical** address, we have to flush TLB \(change `Cr3`\) to convert **GUEST\_RIP** to the physical address. As **HyperDbg** is designed to stick to the **System** process \(pid = 4\), this cr3 change is unavoidable. On the other hand, this command is designed to work on both user-mode and kernel-mode of random processes, and as you know, flushing TLB makes this command even slower. Hence, it's better to deal with the virtual address.
 
 {% hint style="danger" %}
-You shouldn't use any of **!monitor**, **!epthook**, **bp**, and **!epthook2** commands on the same page \(4KB\) simultaneously. For example, when you put a hidden hook \(**!epthook2**\) on **0x10000005**, ****you shouldn't use any of **!monitor** or **!epthook** or **bp** commands on the address starting from **0x10000000** to **0x10000fff**.
+You shouldn't use any of **!monitor**, **!epthook**, and **!epthook2** commands on the same page \(4KB\) simultaneously. For example, when you put a hidden hook \(**!epthook2**\) on **0x10000005**, ****you shouldn't use any of **!monitor** or **!epthook** commands on the address starting from **0x10000000** to **0x10000fff**.
 
- You can use **!epthook** or **bp** \(just _**!epthook**_ not **!epthook2** and not **!monitor**\) on two or more addresses on the same page \(means that you can use the **!epthook** or **bp** multiple times for addresses between a single page or putting multiple hidden breakpoints on a single page\). But you can't use **!monitor** or **!epthook2** twice on the same page.
+ You can use **!epthook** \(just _**!epthook**_ not **!epthook2** and not **!monitor**\) on two or more addresses on the same page \(means that you can use the **!epthook** multiple times for addresses between a single page or putting multiple hidden breakpoints on a single page\). But you can't use **!monitor** or **!epthook2** twice on the same page.
 {% endhint %}
 
 This is an event command, but in the current version of HyperDbg \(in Debugger Mode\), this command will continue the debuggee for some time; however, you can use [this trick](https://docs.hyperdbg.com/tips-and-tricks/misc/enable-and-disable-events-in-debugger-mode) to make sure you won't lose any event.
