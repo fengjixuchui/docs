@@ -28,15 +28,15 @@ Shows the assembly regarding memory content at the **virtual** address hex form.
 
 ### Parameters
 
-\[Address\]
+**\[Address\]**
 
           The **virtual** address of where we want to start to disassemble its memory
 
-l \[Length\] \(optional\)
+**l \[Length\] \(optional\)**
 
           The length \(byte\) in hex format
 
-pid \[process id\]  \(optional\)
+**pid \[process id\]  \(optional\)**
 
           The process ID in hex format that we want to see the memory from its context \(**cr3**\).
 
@@ -138,6 +138,22 @@ typedef enum _DEBUGGER_SHOW_MEMORY_STYLE { DEBUGGER_SHOW_COMMAND_DISASSEMBLE64, 
 ```
 
 **For disassembling, use the `DEBUGGER_SHOW_COMMAND_DISASSEMBLE64` as the `Style` for x64 disassembling and for disassembling x86, use the `DEBUGGER_SHOW_COMMAND_DISASSEMBLE32`.**
+
+In the debugger-mode, HyperDbg uses the exact same structure, you should send the above structure over serial to the debuggee which is paused in **vmx-root** mode.  
+
+You should send the above structure with `DEBUGGER_REMOTE_PACKET_REQUESTED_ACTION_ON_VMX_ROOT_READ_MEMORY` as `RequestedAction` and `DEBUGGER_REMOTE_PACKET_TYPE_DEBUGGER_TO_DEBUGGEE_EXECUTE_ON_VMX_ROOT` as `PacketType`.
+
+In return, the debuggee sends the above structure with the following type.
+
+```c
+DEBUGGER_REMOTE_PACKET_REQUESTED_ACTION_DEBUGGEE_RESULT_OF_READING_MEMORY
+```
+
+The following function is responsible for sending reading memory in the debugger.
+
+```c
+BOOLEAN KdSendReadMemoryPacketToDebuggee(PDEBUGGER_READ_MEMORY ReadMem);
+```
 
 ### **Remarks**
 

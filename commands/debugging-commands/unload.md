@@ -18,7 +18,11 @@ Unloads the HyperDbg drivers and kernel modules from the target system.
 
 ### Parameters
 
-\[module name\]
+**\[remove\]\(optional\)**
+
+          If you want to remove the installed driver \(See **Remarks** for more information\)
+
+**\[module name\]**
 
           The name of the module that you want to unload
 
@@ -55,6 +59,8 @@ HPRDBGCTRL_API int HyperdbgUnload();
 ### **Remarks**
 
 This command will continue the debuggee for some time \(in Debugger Mode\). This means that you lose the current context \(registers & memory\) after executing this command.
+
+If you use the **`remove`** argument, then the driver will be marked to be stopped and uninstalled. You **cannot** re-load that module again until the target machine is restarted.
 
 ### Requirements
 

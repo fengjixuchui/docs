@@ -26,24 +26,24 @@ Searches the **physical** memory for a special byte\(s\).
 
 ### Parameters
 
-\[search from address \(hex\)\]
+**\[search from address \(hex\)\]**
 
           The **physical** address of where we want to start searching from its address.
 
-l \[length \(hex\)\]
+**l \[length \(hex\)\]**
 
           Length of the searching area.
 
-\[byte pattern \(hex\)\]
+**\[byte pattern \(hex\)\]**
 
           Search for these bytes \(pattern\)
 
-pid \[process id \(hex\)\]  \(optional\)
+**pid \[process id \(hex\)\]  \(optional\)**
 
           The process ID in the hex format that we want to see the memory from its context \(**cr3**\).
 
-{% hint style="info" %}
-If you don't specify the **pid**, then the default **pid** is the current process \(**HyperDbg**\) process layout of memory.
+{% hint style="danger" %}
+Process ID doesn't make sense in physical memory. If you specify **pid** for physical memory, ****then it is ignored.
 {% endhint %}
 
 ### Examples
@@ -121,6 +121,10 @@ You can read the result buffer as an `UINT64` array, and if you encounter a null
 
 * You can search for as many bytes as you need in **byte**, **dword**, and **qword** formats. Just add the multiple byte\(s\) values to the end of the command. 
 * In the current implementation of **physical** memory search, the address should also be available and mapped to the target process's **virtual** address space.
+
+{% hint style="info" %}
+Physical addresses are not validated in HyperDbg, which means if you access an invalid physical address, then the debuggee halts or crashes.
+{% endhint %}
 
 This command will continue the debuggee for some time \(in Debugger Mode\). This means that you lose the current context \(registers & memory\) after executing this command.
 
