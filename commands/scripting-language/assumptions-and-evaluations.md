@@ -1,5 +1,7 @@
 ---
-description: Description about HyperDbg's Script Engine
+description: >-
+  Description of keywords, operators, pseudo-registers, number prefixes, and
+  pre-defined functions
 ---
 
 # Assumptions & Evaluations
@@ -78,7 +80,7 @@ The following functions are supported in **Script Engine**.
 | :--- | :--- |
 | **Print** | Print the result of an expression. [Read more... ](https://docs.hyperdbg.com/commands/scripting-language/functions/print) |
 | **Printf** | Print the result in a printf-style format. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/printf) |
-| **Break** | Halt the system and give control to the debugger. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/break) |
+| **Pause** | Halt the system and give control to the debugger. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/pause) |
 | **EnableEvent** | Enable an event. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/enableevent) |
 | **DisableEvent** | Disable an event. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/disableevent) |
 

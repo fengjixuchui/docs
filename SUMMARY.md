@@ -108,6 +108,8 @@
   * [!pa2va \(convert physical address to virtual address\)](commands/extension-commands/pa2va.md)
 * [Scripting Language](commands/scripting-language/README.md)
   * [Assumptions & Evaluations](commands/scripting-language/assumptions-and-evaluations.md)
+  * [Conditionals & Loops](commands/scripting-language/conditionals-and-loops.md)
+  * [Functions & Assignments](commands/scripting-language/functions-and-assignments.md)
   * [Examples](commands/scripting-language/examples/README.md)
     * [View system state \(registers, memory, variables\)](commands/scripting-language/examples/view-system-state.md)
   * [Functions](commands/scripting-language/functions/README.md)
@@ -115,7 +117,7 @@
     * [Printf](commands/scripting-language/functions/printf.md)
     * [EnableEvent](commands/scripting-language/functions/enableevent.md)
     * [DisableEvent](commands/scripting-language/functions/disableevent.md)
-    * [Break](commands/scripting-language/functions/break.md)
+    * [Pause](commands/scripting-language/functions/pause.md)
 
 ## Tips & Tricks
 
@@ -163,7 +165,8 @@
     * [Design Prospective](design/debugger-internals/kernel-debugger/design-prospective.md)
     * [Connection](design/debugger-internals/kernel-debugger/connection.md)
 * [Script Engine](design/script-engine/README.md)
-  * [LL1 Grammar](design/script-engine/log-the-states-ll1-grammar.md)
+  * [Language Grammar](design/script-engine/language-grammar.md)
+  * [Boolean Expression Grammar](design/script-engine/boolean-expression-grammar.md)
 
 ## Links
 
