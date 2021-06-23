@@ -15,7 +15,7 @@ The evaluation engine is open-source, and it is available in the [evaluation](ht
 **HyperDbg** uses a MASM-like \(Windbg\) syntax to evaluate script expressions.
 
 {% hint style="success" %}
-**HyperDbg** script engine is case-insensitive.
+**HyperDbg** script engine is case-sensitive.
 {% endhint %}
 
 ### Keywords
@@ -78,11 +78,12 @@ The following functions are supported in **Script Engine**.
 
 | Function | Description |
 | :--- | :--- |
-| **Print** | Print the result of an expression. [Read more... ](https://docs.hyperdbg.com/commands/scripting-language/functions/print) |
-| **Printf** | Print the result in a printf-style format. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/printf) |
-| **Pause** | Halt the system and give control to the debugger. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/pause) |
-| **EnableEvent** | Enable an event. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/enableevent) |
-| **DisableEvent** | Disable an event. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/disableevent) |
+| **print** | Print the result of an expression. [Read more... ](https://docs.hyperdbg.com/commands/scripting-language/functions/print) |
+| **printf** | Print the result in a printf-style format. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/printf) |
+| **eb, ed, eq** | Modify memory safely. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/eb-ed-eq) |
+| **pause** | Halt the system and give control to the debugger. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/pause) |
+| **enable\_event** | Enable an event. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/enable_event) |
+| **disable\_event** | Disable an event. [Read more...](https://docs.hyperdbg.com/commands/scripting-language/functions/disable_event) |
 
 
 
